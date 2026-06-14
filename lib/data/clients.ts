@@ -1,0 +1,18 @@
+export const clients: string[] = [
+  "TVF",
+  "Sony LIV",
+  "Amazon Prime",
+  "Amazon MiniTV",
+  "MX Player",
+  "Samsung",
+  "Realme",
+  "Bold Care",
+  "Dream11",
+  "Borosil",
+  "RVCJ",
+  "Vedantu",
+  "Motion Education",
+  "Mentors Eduserv",
+  "Nexttoppers",
+  "Sikh Music",
+];

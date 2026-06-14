@@ -1,26 +1,284 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #07060f;
+  --surface: #0e0b1a;
+  --surface-2: #151028;
+  --violet: #a855f7; /* electric purple */
+  --magenta: #ff3dbe;
+  --cyan: #22e4ff;
+  --blue: #4d7cff; /* neon blue */
+  --orange: #ff7a3d;
+  --ink: #f7f5ff;
+  --muted: #9d98b8;
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-violet: var(--violet);
+  --color-magenta: var(--magenta);
+  --color-cyan: var(--cyan);
+  --color-blue: var(--blue);
+  --color-orange: var(--orange);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
+  --font-serif: var(--font-instrument);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: auto;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--magenta);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--violet), var(--magenta), var(--orange));
+  border-radius: 999px;
+  border: 2px solid var(--bg);
+}
+
+/* Custom cursor — native cursor hidden only when JS enables it */
+html.cursor-on,
+html.cursor-on * {
+  cursor: none !important;
+}
+
+/* ---------- Typography utilities ---------- */
+
+.font-display {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+}
+
+.font-serif-accent {
+  font-family: var(--font-instrument), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.text-gradient {
+  background: linear-gradient(92deg, var(--violet) 0%, var(--magenta) 50%, var(--orange) 105%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-cool {
+  background: linear-gradient(92deg, var(--blue) 0%, var(--cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-animated {
+  background: linear-gradient(
+    92deg,
+    var(--violet),
+    var(--magenta),
+    var(--orange),
+    var(--cyan),
+    var(--violet)
+  );
+  background-size: 320% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-pan 7s linear infinite;
+}
+
+@keyframes gradient-pan {
+  to {
+    background-position: 320% 0;
+  }
+}
+
+.text-outline {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.28);
+  color: transparent;
+}
+
+.text-outline-faint {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+  color: transparent;
+}
+
+.eyebrow {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* ---------- Aurora background system ---------- */
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  mix-blend-mode: screen;
+  will-change: transform;
+  pointer-events: none;
+}
+
+@keyframes aurora-a {
+  0%, 100% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+  25% { transform: translate(18%, -12%) scale(1.25) rotate(40deg); }
+  50% { transform: translate(-10%, 16%) scale(0.9) rotate(90deg); }
+  75% { transform: translate(12%, 8%) scale(1.15) rotate(140deg); }
+}
+
+@keyframes aurora-b {
+  0%, 100% { transform: translate(0%, 0%) scale(1.1); }
+  33% { transform: translate(-22%, 14%) scale(0.85); }
+  66% { transform: translate(14%, -18%) scale(1.3); }
+}
+
+@keyframes aurora-c {
+  0%, 100% { transform: translate(0%, 0%) scale(0.9) rotate(0deg); }
+  50% { transform: translate(-15%, -20%) scale(1.35) rotate(-60deg); }
+}
+
+.animate-aurora-a { animation: aurora-a 22s ease-in-out infinite; }
+.animate-aurora-b { animation: aurora-b 17s ease-in-out infinite; }
+.animate-aurora-c { animation: aurora-c 26s ease-in-out infinite; }
+
+@keyframes hue-drift {
+  0%, 100% { filter: blur(90px) hue-rotate(0deg); }
+  50% { filter: blur(90px) hue-rotate(45deg); }
+}
+.animate-hue-drift { animation: hue-drift 14s ease-in-out infinite; }
+
+/* ---------- Film grain ---------- */
+
+.noise::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 80;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+/* ---------- Motion helpers ---------- */
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(2deg); }
+}
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 18s linear infinite;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+.animate-marquee-reverse {
+  animation: marquee var(--marquee-duration, 40s) linear infinite reverse;
+}
+.marquee-group:hover .animate-marquee,
+.marquee-group:hover .animate-marquee-reverse {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-dot {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(14px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+.animate-scroll-dot {
+  animation: scroll-dot 2s ease-in-out infinite;
+}
+
+/* Pinned stack sections (services / testimonials): items overlap only
+   when JS confirms motion is allowed and sets data-animated. */
+.pin-stack[data-animated] .pin-item {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+}
+
+.ts-dot-on {
+  background: var(--magenta);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
