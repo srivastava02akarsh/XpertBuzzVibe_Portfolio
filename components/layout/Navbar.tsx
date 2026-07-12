@@ -1,11 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import Magnetic from "@/components/ui/Magnetic";
 import { scrollToSection } from "@/lib/hooks";
+import logo from "@/public/images/logo.png";
 
 const links = [
   { id: "about", label: "About" },
@@ -94,9 +96,16 @@ export default function Navbar() {
           <Link
             href="/#top"
             onClick={go("top")}
-            className="relative z-50 font-display text-xl font-bold tracking-tight text-ink"
+            aria-label="XpertBuzzVibe — home"
+            className="relative z-50 inline-flex items-center"
           >
-            Xpert<span className="text-gradient-animated">Buzz</span>Vibe
+            <Image
+              src={logo}
+              alt="XpertBuzzVibe"
+              priority
+              sizes="140px"
+              className="h-9 w-auto md:h-10"
+            />
           </Link>
 
           {/* Desktop nav */}

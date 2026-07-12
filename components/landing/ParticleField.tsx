@@ -27,7 +27,7 @@ export default function ParticleField() {
     let height = 0;
     let particles: Particle[] = [];
     let frame = 0;
-    let running = true;
+    let running = false;
     const mouse = { x: -9999, y: -9999 };
 
     const resize = () => {
@@ -109,23 +109,30 @@ export default function ParticleField() {
       mouse.y = -9999;
     };
 
-    // pause when offscreen
+    // run only while on-screen AND the tab is visible (pure perf gate — the
+    // particle field looks identical the moment it's back in view)
+    let onScreen = true;
+    const evaluate = () => {
+      const next = onScreen && !document.hidden;
+      if (next === running) return;
+      running = next;
+      if (running) frame = requestAnimationFrame(tick);
+      else cancelAnimationFrame(frame);
+    };
+
     const observer = new IntersectionObserver(([entry]) => {
-      const visible = entry.isIntersecting;
-      if (visible && !running) {
-        running = true;
-        frame = requestAnimationFrame(tick);
-      } else if (!visible) {
-        running = false;
-        cancelAnimationFrame(frame);
-      }
+      onScreen = entry.isIntersecting;
+      evaluate();
     });
+    const onVisibility = () => evaluate();
 
     resize();
     window.addEventListener("resize", resize);
     window.addEventListener("mousemove", onMouse);
     canvas.addEventListener("mouseleave", onLeave);
+    document.addEventListener("visibilitychange", onVisibility);
     observer.observe(canvas);
+    running = true;
     frame = requestAnimationFrame(tick);
 
     return () => {
@@ -134,6 +141,7 @@ export default function ParticleField() {
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouse);
       canvas.removeEventListener("mouseleave", onLeave);
+      document.removeEventListener("visibilitychange", onVisibility);
       observer.disconnect();
     };
   }, []);

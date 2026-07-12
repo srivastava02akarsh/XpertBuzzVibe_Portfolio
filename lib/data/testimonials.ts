@@ -17,11 +17,27 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
+      "XpertBuzzVibe understands the student mindset like no one else. They turned tough concepts into content aspirants actually share — putting PW in front of millions and turning casual scrollers into serious learners.",
+    name: "Alakh Pandey",
+    role: "Founder & CEO",
+    company: "PW",
+    metric: "Millions of aspirants reached",
+  },
+  {
+    quote:
       "100M+ views and a complete redefinition of how Motion shows up online — within a single month. That's not marketing, that's momentum.",
     name: "Nitin Vijay",
     role: "Founder & CEO",
     company: "Motion Education",
     metric: "100M+ views in 1 month",
+  },
+  {
+    quote:
+      "They translated decades of academic trust into a language the feed actually understands. Every campaign made Allen feel as sharp online as it is in the classroom — and the right students noticed.",
+    name: "Mohit",
+    role: "Marketing Head",
+    company: "Allen",
+    metric: "Brand trust, amplified",
   },
   {
     quote:

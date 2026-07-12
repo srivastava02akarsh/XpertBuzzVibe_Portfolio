@@ -101,9 +101,12 @@ export default function ServicesStack() {
           scrub: 0.7,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
+            // tick at each transition's midpoint so the counter matches the
+            // card visually in front (cards ease in with power2.out, arriving
+            // before the timeline hits the integer mark — floor lagged by ~1)
             const idx = Math.min(
               count,
-              Math.floor(self.progress * (count - 1) + 1.0001)
+              Math.round(self.progress * (count - 1)) + 1
             );
             if (indexRef.current)
               indexRef.current.textContent = String(idx).padStart(2, "0");

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/layout/SmoothScroll";
+import ScrollManager from "@/components/layout/ScrollManager";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Cursor from "@/components/layout/Cursor";
@@ -84,6 +85,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
         <SmoothScroll>
+          <ScrollManager />
           <BackgroundMorph />
           <ScrollProgress />
           <Cursor />

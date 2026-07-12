@@ -13,7 +13,6 @@ export const heroStats: Stat[] = [
 
 export const stats: Stat[] = [
   { value: 1, suffix: "B+", label: "Total Reach", sub: "across every major platform" },
-  { value: 200, suffix: "K+", label: "Conversions", sub: "driven for client funnels" },
   { value: 70, suffix: "+", label: "Viral Campaigns", sub: "engineered end to end" },
   { value: 96, suffix: "%", label: "Client Retention", sub: "partners who stay with us" },
   { value: 25, suffix: "+", label: "Major Brands", sub: "from OTT giants to startups" },

@@ -15,7 +15,7 @@ const ROWS: { word: string; className: string }[] = [
   { word: "VIBE", className: "text-outline" },
 ];
 
-const SUBTITLE = "India's viral marketing engine — TVF · SonyLIV · Amazon · Samsung";
+const SUBTITLE = "India's viral marketing engine — TVF · SonyLIV · Amazon · Allen · PW";
 
 /**
  * Cinematic opening: monumental wordmark fills the viewport, letters animate

@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { caseStudies } from "@/lib/data/case-studies";
-import { getBrandAssets } from "@/lib/brand-assets";
 import TextReveal from "@/components/ui/TextReveal";
 import SpotlightCard from "@/components/ui/SpotlightCard";
 import CtaSection from "@/components/sections/CtaSection";
@@ -30,8 +29,6 @@ export default async function CaseStudyPage({ params }: Props) {
   if (index === -1) notFound();
   const study = caseStudies[index];
   const next = caseStudies[(index + 1) % caseStudies.length];
-  const assets = getBrandAssets(study.slug);
-  const nextAssets = getBrandAssets(next.slug);
 
   return (
     <>
@@ -42,19 +39,6 @@ export default async function CaseStudyPage({ params }: Props) {
           background: `linear-gradient(170deg, ${study.brand.from} 0%, ${study.brand.to} 45%, var(--bg) 100%)`,
         }}
       >
-        {assets.keyArt && (
-          <div aria-hidden className="absolute inset-0">
-            <Image
-              src={assets.keyArt}
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover opacity-25"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-bg/50 via-bg/70 to-bg" />
-          </div>
-        )}
         <p
           aria-hidden
           className="pointer-events-none absolute top-28 -right-[2%] font-display text-[13vw] leading-none font-bold whitespace-nowrap text-white/4 select-none"
@@ -62,61 +46,76 @@ export default async function CaseStudyPage({ params }: Props) {
           {study.brand.showTitle}
         </p>
 
-        <div className="relative mx-auto max-w-5xl px-6">
+        <div className="relative mx-auto max-w-6xl px-6">
           <Link
             href="/#work"
             className="mb-8 inline-block text-sm text-muted transition-colors hover:text-ink"
           >
             ← All work
           </Link>
-          <div className="flex flex-wrap items-center gap-4">
-            {assets.logo ? (
-              <span className="relative h-10 w-32">
-                <Image
-                  src={assets.logo}
-                  alt={`${study.client} logo`}
-                  fill
-                  sizes="128px"
-                  className="object-contain object-left"
-                />
-              </span>
-            ) : (
-              <span
-                className="rounded-xl border px-4 py-2 font-display text-base font-bold tracking-tight text-ink"
-                style={{
-                  borderColor: `${study.brand.accent}66`,
-                  background: `${study.brand.accent}1a`,
-                }}
-              >
-                {study.brand.mark}
-              </span>
-            )}
-            <span className="rounded-full bg-white/8 px-3 py-1 text-xs text-muted">
-              {study.category}
-            </span>
-          </div>
 
-          <p
-            className="mt-8 font-display text-5xl leading-[0.95] font-bold tracking-tight md:text-7xl"
-            style={{ color: study.brand.accent }}
-          >
-            {study.brand.showTitle}
-          </p>
-          <p className="font-serif-accent mt-3 text-2xl text-ink/85 md:text-3xl">
-            {study.brand.tag}
-          </p>
-          <TextReveal
-            as="h1"
-            text={study.title}
-            className="mt-8 max-w-3xl font-display text-3xl font-bold leading-[1.08] tracking-tight text-ink md:text-5xl"
-          />
-          <div className="mt-12 inline-block rounded-3xl glass px-10 py-8">
-            <p className="font-display text-6xl font-bold text-gradient md:text-7xl">
-              {study.headlineMetric.value}
-            </p>
-            <p className="mt-2 text-sm tracking-wider text-muted uppercase">
-              {study.headlineMetric.label}
-            </p>
+          <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <div>
+              <div className="flex flex-wrap items-center gap-4">
+                <span
+                  className="rounded-xl border px-4 py-2 font-display text-base font-bold tracking-tight text-ink"
+                  style={{
+                    borderColor: `${study.brand.accent}66`,
+                    background: `${study.brand.accent}1a`,
+                  }}
+                >
+                  {study.brand.mark}
+                </span>
+                <span className="rounded-full bg-white/8 px-3 py-1 text-xs text-muted">
+                  {study.category}
+                </span>
+              </div>
+
+              <p
+                className="mt-8 font-display text-5xl leading-[0.95] font-bold tracking-tight md:text-7xl"
+                style={{ color: study.brand.accent }}
+              >
+                {study.brand.showTitle}
+              </p>
+              <p className="font-serif-accent mt-3 text-2xl text-ink/85 md:text-3xl">
+                {study.brand.tag}
+              </p>
+              <TextReveal
+                as="h1"
+                text={study.title}
+                className="mt-8 max-w-2xl font-display text-3xl font-bold leading-[1.08] tracking-tight text-ink md:text-5xl"
+              />
+              <div className="mt-12 inline-block rounded-3xl glass px-10 py-8">
+                <p className="font-display text-6xl font-bold text-gradient md:text-7xl">
+                  {study.headlineMetric.value}
+                </p>
+                <p className="mt-2 text-sm tracking-wider text-muted uppercase">
+                  {study.headlineMetric.label}
+                </p>
+              </div>
+            </div>
+
+            {/* The poster — the campaign's hero visual */}
+            <div className="relative mx-auto w-full max-w-sm">
+              <div
+                aria-hidden
+                className="absolute -inset-6 rounded-[2.5rem] opacity-40 blur-3xl"
+                style={{
+                  background: `radial-gradient(circle, ${study.brand.accent}, transparent 70%)`,
+                }}
+              />
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] border border-white/12 shadow-2xl">
+                <Image
+                  src={study.poster}
+                  alt={study.posterAlt}
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 420px, 90vw"
+                  placeholder="blur"
+                  className="object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -170,25 +169,15 @@ export default async function CaseStudyPage({ params }: Props) {
           }}
         >
           <div aria-hidden className="absolute inset-0 overflow-hidden">
-            {nextAssets.keyArt ? (
-              <>
-                <Image
-                  src={nextAssets.keyArt}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 1024px, 100vw"
-                  className="object-cover opacity-30 transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-bg/80 to-bg/30" />
-              </>
-            ) : (
-              <div
-                className="absolute -top-1/2 -right-1/4 h-[200%] w-[80%] rounded-full opacity-25 blur-3xl transition-opacity duration-500 group-hover:opacity-40"
-                style={{
-                  background: `radial-gradient(circle, ${next.brand.accent}, transparent 65%)`,
-                }}
-              />
-            )}
+            <Image
+              src={next.poster}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 1024px, 100vw"
+              placeholder="blur"
+              className="object-cover opacity-30 transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-bg/85 via-bg/55 to-bg/30" />
           </div>
           <div className="relative flex items-center justify-between gap-6">
             <div>

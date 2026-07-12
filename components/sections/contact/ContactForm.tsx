@@ -5,7 +5,10 @@ import { motion } from "motion/react";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { services } from "@/lib/data/services";
 
-type Status = "idle" | "sending" | "sent" | "error";
+type Status = "idle" | "sent";
+
+// XpertBuzzVibe WhatsApp — +91 9117962709 (country code 91 + number, no "+" for wa.me)
+const WHATSAPP_NUMBER = "919117962709";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -17,27 +20,31 @@ export default function ContactForm() {
     );
   };
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus("sending");
     const form = new FormData(e.currentTarget);
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.get("name"),
-          email: form.get("email"),
-          phone: form.get("phone"),
-          company: form.get("company"),
-          message: form.get("message"),
-          interests,
-        }),
-      });
-      setStatus(res.ok ? "sent" : "error");
-    } catch {
-      setStatus("error");
-    }
+
+    const line = (label: string, value: FormDataEntryValue | null) =>
+      value ? `*${label}:* ${value}` : null;
+
+    const text = [
+      "New project inquiry from the XpertBuzzVibe website 👋",
+      "",
+      line("Name", form.get("name")),
+      line("Email", form.get("email")),
+      line("Phone", form.get("phone")),
+      line("Company", form.get("company")),
+      interests.length ? `*Interested in:* ${interests.join(", ")}` : null,
+      "",
+      "*Project:*",
+      String(form.get("message") ?? ""),
+    ]
+      .filter((l) => l !== null)
+      .join("\n");
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+    setStatus("sent");
   };
 
   if (status === "sent") {
@@ -51,10 +58,11 @@ export default function ContactForm() {
           ✓
         </span>
         <h3 className="mt-6 font-display text-2xl font-bold text-ink">
-          Message received. Buckle up.
+          WhatsApp is open. Just hit send.
         </h3>
         <p className="mt-3 max-w-sm text-muted">
-          Our team will get back to you within one business day with next steps.
+          We&apos;ve pre-filled your details in a WhatsApp message to our team —
+          tap send and we&apos;ll reply within one business day.
         </p>
       </motion.div>
     );
@@ -106,16 +114,13 @@ export default function ContactForm() {
         className={inputClass}
       />
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-4">
         <MagneticButton type="submit">
-          {status === "sending" ? "Sending…" : "Send Message"}{" "}
-          <span aria-hidden>→</span>
+          Send on WhatsApp <span aria-hidden>→</span>
         </MagneticButton>
-        {status === "error" && (
-          <p className="text-sm text-magenta">
-            Something went wrong — try again or email us directly.
-          </p>
-        )}
+        <p className="text-xs text-muted/70">
+          Opens WhatsApp with your details pre-filled.
+        </p>
       </div>
     </form>
   );

@@ -33,6 +33,11 @@
 
 html {
   scroll-behavior: auto;
+  /* keep font sizes as designed on iOS (no landscape auto-inflation) */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* remove the grey/blue flash box when tapping links & cards on touch devices */
+  -webkit-tap-highlight-color: transparent;
 }
 
 html.lenis,
@@ -186,6 +191,10 @@ html.cursor-on * {
 .animate-aurora-b { animation: aurora-b 17s ease-in-out infinite; }
 .animate-aurora-c { animation: aurora-c 26s ease-in-out infinite; }
 
+/* Pause aurora animation (incl. the expensive blur+hue-rotate) when the field
+   is off-screen / the tab is hidden — set by Aurora.tsx. No visual change. */
+.aurora-paused .aurora-blob { animation-play-state: paused; }
+
 @keyframes hue-drift {
   0%, 100% { filter: blur(90px) hue-rotate(0deg); }
   50% { filter: blur(90px) hue-rotate(45deg); }
@@ -205,6 +214,14 @@ html.cursor-on * {
   opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: grain 8s steps(10) infinite;
+}
+
+/* Mobile: keep the identical grain texture but stop the per-frame full-screen
+   repaint — battery/jank win on phones, visually indistinguishable. */
+@media (max-width: 767px) {
+  .noise::after {
+    animation: none;
+  }
 }
 
 @keyframes grain {

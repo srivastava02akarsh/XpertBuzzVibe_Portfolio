@@ -1,13 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/lib/data/site";
-
-const WORDMARK = "XPERTBUZZVIBE";
-const HOVER_COLORS = [
-  "hover:text-violet",
-  "hover:text-magenta",
-  "hover:text-cyan",
-  "hover:text-orange",
-];
+import logo from "@/public/images/logo.png";
 
 const links = [
   { href: "/#about", label: "About" },
@@ -21,28 +15,18 @@ export default function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-white/8">
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-10">
-        {/* Giant interactive wordmark */}
+        {/* Brand logo */}
         <Link
           href="/#top"
           aria-label="XpertBuzzVibe — back to top"
-          className="block w-full text-center"
+          className="group mx-auto block w-full max-w-lg"
         >
-          <span
-            aria-hidden
-            className="flex w-full items-baseline justify-between font-display leading-none font-bold text-ink select-none"
-            style={{ fontSize: "clamp(2rem, 7vw, 8rem)" }}
-          >
-            {WORDMARK.split("").map((ch, i) => (
-              <span
-                key={i}
-                className={`inline-block transition-transform duration-300 ease-out hover:-translate-y-3 ${
-                  HOVER_COLORS[i % HOVER_COLORS.length]
-                }`}
-              >
-                {ch}
-              </span>
-            ))}
-          </span>
+          <Image
+            src={logo}
+            alt="XpertBuzzVibe — Flow with the trend"
+            sizes="(min-width: 640px) 512px, 90vw"
+            className="mx-auto h-auto w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+          />
         </Link>
 
         <div className="mt-14 flex flex-col items-start justify-between gap-8 border-t border-white/8 pt-8 md:flex-row md:items-center">

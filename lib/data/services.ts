@@ -61,6 +61,8 @@ export const services: Service[] = [
       "Community management",
       "Platform growth optimization",
       "Monthly performance analytics",
+      "Google ads management",
+      "Meta ads management",
     ],
     index: "04",
   },

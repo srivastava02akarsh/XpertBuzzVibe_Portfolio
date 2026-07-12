@@ -59,7 +59,7 @@ export const industries: Industry[] = [
     title: "Tech & Electronics",
     description:
       "Launch hype and community buzz for the devices everyone's comparing.",
-    clients: ["Samsung", "Realme"],
+    clients: ["Realme", "Oppo"],
     icon: "📱",
     image: imgTech,
     imageAlt: "Macro shot of a glowing circuit board",

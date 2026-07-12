@@ -16,13 +16,6 @@ const ROWS = [
     gradient: "from-violet to-magenta",
   },
   {
-    value: 200,
-    suffix: "K+",
-    label: "Conversions",
-    sub: "driven through client funnels",
-    gradient: "from-blue to-cyan",
-  },
-  {
     value: 70,
     suffix: "+",
     label: "Viral Campaigns",

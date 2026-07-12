@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 type Props = {
   intensity?: "bold" | "soft";
   className?: string;
@@ -5,9 +9,43 @@ type Props = {
 
 /** Animated aurora: drifting, hue-shifting blurred color fields. */
 export default function Aurora({ intensity = "soft", className = "" }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
   const opacity = intensity === "bold" ? "" : "opacity-50";
+
+  // Pause the GPU-heavy blur animations while the aurora is off-screen or the
+  // tab is hidden. Purely a performance gate — the look is untouched whenever
+  // any part of it is visible.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    let onScreen = true;
+    const apply = () => {
+      const active = onScreen && !document.hidden;
+      el.classList.toggle("aurora-paused", !active);
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting;
+        apply();
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(el);
+
+    const onVisibility = () => apply();
+    document.addEventListener("visibilitychange", onVisibility);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, []);
+
   return (
     <div
+      ref={ref}
       aria-hidden
       className={`pointer-events-none absolute inset-0 overflow-hidden ${opacity} ${className}`}
     >

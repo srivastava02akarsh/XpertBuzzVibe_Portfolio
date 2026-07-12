@@ -6,7 +6,7 @@ A vibrant, heavily animated, image-rich single-page storytelling site for **Xper
 
 21 royalty-free Unsplash photos live locally in `public/images/` (pre-optimized WebP, fetched at display size), serving the manifesto stack, service panels and industry previews via `next/image` static imports — responsive `srcset`, lazy loading, blur-up placeholders. Every image was visually reviewed; none contain third-party brand marks. The hero is purely typographic — no imagery competes with the wordmark.
 
-**The work section uses client branding, not stock photos.** Each case-study card renders a typographic brand plate (client wordmark, project title, brand color field) defined in `lib/data/case-studies.ts`. Real client assets (logos, key art) dropped into `public/brands/<slug>/` are auto-detected at build time (`lib/brand-assets.ts`) and upgrade the cards/heroes automatically — see `public/brands/README.md` for the exact files needed. Testimonial avatars are intentionally monogram-based (no stock faces attached to real client names).
+**The work section is a poster wall of success stories.** Each case study is a vertical show poster (`public/images/work-<slug>.webp`, optimized WebP, blur-up placeholders) badged with its view count, defined in `lib/data/case-studies.ts` and rendered in the pinned horizontal gallery (`components/landing/WorkHorizontal.tsx`) and detail pages (`app/work/[slug]/page.tsx`). Each case study's challenge/strategy/results copy is original. Testimonial avatars are intentionally monogram-based (no stock faces attached to real client names).
 
 ## Run it
 
@@ -56,7 +56,7 @@ Global systems: `BackgroundMorph` (page background color morphs per section via 
 
 ## Content
 
-All copy/data lives in typed files under `lib/data/` — services, case studies, clients, testimonials, industries, stats, process, site contact info. Client roster and case studies are merged from DBMC's portfolio (TVF, Sony LIV, Amazon MiniTV, Samsung, etc.) per brand-consolidation decision; client names render as styled text, no logo assets bundled.
+All copy/data lives in typed files under `lib/data/` — services, case studies, clients, testimonials, industries, stats, process, site contact info. Client roster and case studies are merged from DBMC's portfolio (TVF, Sony LIV, Amazon MiniTV, PW, Allen, etc.) per brand-consolidation decision; client names render as styled text, no logo assets bundled.
 
 ## Contact form
 
