@@ -20,7 +20,7 @@ export const site = {
     {
       label: "Instagram",
       handle: "@xpertbuzzvibe_",
-      href: "https://www.instagram.com/xpertbuzzvibe_",
+      href: "https://www.instagram.com/xpertbuzzvibe",
     },
     {
       label: "LinkedIn",

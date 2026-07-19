@@ -64,7 +64,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     services: ["Meme Marketing", "Influencer Seeding", "Reels & Shorts"],
     brand: {
-      mark: "TVF",
+      mark: "amazon miniTV",
       showTitle: "YEH MERI FAMILY",
       tag: "The comfort rewatch.",
       from: "#2a1606",
@@ -124,7 +124,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     services: ["Meme Marketing", "Influencer Seeding", "Content Creation"],
     brand: {
-      mark: "TVF",
+      mark: "amazon miniTV",
       showTitle: "AMBER GIRLS SCHOOL",
       tag: "A debut IP, launched loud.",
       from: "#270a1a",
@@ -274,7 +274,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     services: ["Meme Marketing", "Influencer Seeding", "Content Marketing"],
     brand: {
-      mark: "TVF",
+      mark: "amazon miniTV",
       showTitle: "HALF CA",
       tag: "Accounts, ambitions, attempts.",
       from: "#04211b",
